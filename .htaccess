@@ -1,2 +1,0 @@
-SetOutputFilter DEFLATE
-SetEnvIfNoCase Request_URI "\.(?:gif|jpe?g|png)$" no-gzip
