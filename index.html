@@ -154,6 +154,10 @@
       > a {
         font-family: 'Basteleur', sans-serif;
       }
+
+      > h2 {
+        padding-top: 0;
+      }
     }
 
     main {
@@ -182,6 +186,10 @@
     h2 {
       font-size: 1.5em;
       padding-top: 1ch;
+    }
+
+    #about-header {
+        display: none;
     }
     
     a {
@@ -240,6 +248,14 @@
         }
       }
 
+      #about {
+        padding-top: 2ch;
+      }
+
+      #about-header {
+        display: unset;
+      }
+
       #to-the-top {
         display: unset;
         position: absolute;
@@ -275,9 +291,8 @@
     <h1 id="header">Frederik Krogsdal Jacobsen</h1>
   </header>
   <nav>
-    <p>
-      On this page:
-      <ol>
+    <h2 id="on-this-page">On this page</h2>
+      <ol aria-labelledby="on-this-page">
         <li><a href="#about">About me</a></li>
         <li><a href="#talks">Talks</a></li>
         <li><a href="#software">Software</a></li>
@@ -290,10 +305,10 @@
         <li><a href="#contact">Contact</a></li>
       </ol>
       <a href="#">Back to the top <span style="position: relative; top: -4pt">&#10548;</span></a>
-    </p>
   </nav>
   <main>
   <section id="about" aria-label="About me">
+    <h2 id="about-header">About me</h2>
     <p>
       Hey, I'm Frederik! I'm a Staff Engineer at <a href="https://idura.eu">Idura</a>, where I work on privacy-preserving digital identity verification.
       Identity verification is useful for a lot of things such as fraud prevention and anti-money laundering.
