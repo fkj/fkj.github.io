@@ -212,14 +212,15 @@
     }
 
     #pic {
-      width: 200px;
-      height: 200px;
+      width: 190px;
+      height: 190px;
       padding: 0;
       display: block;
-      justify-self: center;
-      border-radius: 50%;
-      mask-image: radial-gradient(circle, black 65%, transparent 68%);
-      -webkit-mask-image: radial-gradient(circle, black 65%, transparent 68%);
+      justify-self: left;
+      border-style: solid;
+      border-width: 5px;
+      border-color: light-dark(var(--light-link), var(--dark-link));
+      border-radius: 7%;
     }
 
     #to-the-top {
@@ -262,6 +263,11 @@
 
       #about-header {
         display: unset;
+      }
+
+      #pic {
+        justify-self: center;
+        margin-top: 5ch;
       }
 
       #to-the-top {
