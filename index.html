@@ -9,26 +9,6 @@
   <style>
     /* latin-ext */
     @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 800;
-      font-display: optional;
-      src: url(https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gfD_u50.woff2) format('woff2');
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    
-    /* latin */
-    @font-face {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 800;
-      font-display: optional;
-      src: url(https://fonts.gstatic.com/s/montserrat/v15/JTURjIg1_i6t8kCHKm45_c5H3gnD_g.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-
-    /* latin-ext */
-    @font-face {
       font-family: 'Source Sans Pro';
       font-style: italic;
       font-weight: 400;
@@ -107,34 +87,94 @@
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
-    html {
-      background-color: rgba(153,0,0,1);
-      opacity: 1;
-      background-image: linear-gradient(135deg, #a31919 25%, transparent 25%),
-                        linear-gradient(225deg, #a31919 25%, transparent 25%),
-                        linear-gradient(45deg, #a31919 25%, transparent 25%),
-                        linear-gradient(315deg, #a31919 25%, #990000 25%);
-      background-position:  40px 0, 40px 0, 0 0, 0 0;
-      background-size: 80px 80px;
-      background-repeat: repeat;
+    @font-face {
+      font-family: 'Basteleur';
+      font-style: normal;
+      font-weight: 900;
+      font-display: optional;
+      src: url(fonts/Basteleur-Bold.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    :root {
+      color-scheme: light dark;
+
+      --light-bg: #eeeeee;
+      --light-color: #1b2021;
+      --light-link: #c24b26;
+
+      --dark-bg: #1b2021;
+      --dark-color: #cfcfcf;
+      --dark-link: #db9d47;
+    }
+
+    @media screen and (prefers-reduced-motion: no-preference) {
+      html {
+        scroll-behavior: smooth;
+      }
     }
 
     body {
-      margin: auto;
-      padding: 3ch 2ch;
-      max-width: 70ch;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      grid-template-areas:
+        "header header"
+        "nav main"
+        "footer footer";
+      gap: 0 10ch;
+
+      background-color: light-dark(var(--light-bg), var(--dark-bg));
+      color: light-dark(var(--light-color), var(--dark-color));
+    }
+
+    header {
+      grid-area: header;
+      text-align: left;
+
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      gap: 10ch;
+      align-items: center;
+
+      & h1 {
+        font-size: 4em;
+        font-family: 'Basteleur', serif;
+        font-weight: 900;
+      }
+    }
+
+    navigation {
+      grid-area: nav;
+      align-self: start;
+      top: 1rem;
+      position: sticky;
+      font-family: 'Source Sans Pro', serif;
+
+      > a {
+        font-family: 'Basteleur', sans-serif;
+      }
+    }
+
+    main {
+      grid-area: main;
+      text-align: left;
+      max-width: 120ch;
       font-family: 'Source Sans Pro', serif;
       font-size: 16pt;
-      background-color: white;
+    }
+
+    footer {
+      grid-area: footer;
+      text-align: right;
+      margin-top: 5ch;
     }
 
     h1, h2 {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Basteleur', sans-serif;
     }
 
     h1 {
       font-size: 2em;
-      text-align: center;
     }
 
     h2 {
@@ -142,7 +182,7 @@
     }
     
     a {
-      color: #990000;
+      color: light-dark(var(--light-link), var(--dark-link));
       text-decoration: none;
     }
 
@@ -155,12 +195,73 @@
     #pic {
       width: 200px;
       height: 200px;
-      margin: auto;
       padding: 0;
       display: block;
+      justify-self: center;
       border-radius: 50%;
       mask-image: radial-gradient(circle, black 65%, transparent 68%);
       -webkit-mask-image: radial-gradient(circle, black 65%, transparent 68%);
+    }
+
+    #to-the-top {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "header"
+          "nav"
+          "main"
+          "footer";
+        gap: 0;
+        position: relative;
+        padding-bottom: calc(60px + 2ch + 1ch);
+      }
+
+      header {
+        grid-template-columns: 1fr;
+        gap: 0;
+        text-align: center;
+      }
+
+      main {
+        max-width: unset; 
+      }
+
+      navigation {
+        position: unset;
+        > a {
+          display: none;
+        }
+      }
+
+      #to-the-top {
+        display: unset;
+        position: absolute;
+        top: 200vh;
+        right: 2ch;
+        height: calc(100% - 200vh);
+        width: 60px;
+        pointer-events: none;
+
+        & a {
+          display: inline-block;
+          position: sticky;
+          pointer-events: all;
+          top: calc(100vh - 60px - 2ch);
+
+          background-color: light-dark(var(--light-link), var(--dark-link));
+          color: light-dark(var(--light-bg), var(--dark-bg));
+          font-family: "Basteleur", sans-serif;
+          border-radius: 1ch;
+          text-align: center;
+          padding: 0.5ch;
+          height: 60px;
+          width: 60px;
+        }
+      }
     }
   </style>
 </head>
@@ -170,37 +271,54 @@
     <img id="pic" src="pic.jpg" alt="Picture of Frederik Krogsdal Jacobsen">
     <h1 id="header">Frederik Krogsdal Jacobsen</h1>
   </header>
+  <navigation>
+    On this page:
+    <ol>
+      <li><a href="#about">About me</a></li>
+      <li><a href="#talks">Talks</a></li>
+      <li><a href="#software">Software</a></li>
+      <li><a href="#articles">Articles</a></li>
+      <li><a href="#abstracts">Abstracts</a></li>
+      <li><a href="#formalizations">Published formalizations</a></li>
+      <li><a href="#theses">Theses</a></li>
+      <li><a href="#teaching">Teaching and supervision</a></li>
+      <li><a href="#other-stuff">Other stuff</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+    <a href="#">Back to the top <span style="position: relative; top: -4pt">&#10548;</span></a>
+  </navigation>
   <main>
-  <section id="introduction" aria-label="Introduction">
+  <section id="about" aria-label="About me">
     <p>
-      I work at <a href="https://criipto.com">Criipto</a>, where I develop privacy-preserving digital identity verification.
-      This is useful for things such as fraud prevention and anti-money laundering.
-      Mainly, it is useful for ordinary people who don't want to reveal all of their personal information whenever they need to prove that they are old enough to buy a beer.
+      Hey, I'm Frederik! I'm a Staff Engineer at <a href="https://idura.eu">Idura</a>, where I work on privacy-preserving digital identity verification.
+      Identity verification is useful for a lot of things such as fraud prevention and anti-money laundering.
+      Privacy preservation means that people shouldn't have to reveal all of their personal information just to buy a beer.
     </p>
     <p>
-      I am also interested in formal methods for logic and distributed systems and in the context of teaching. In particular, I am interested in proof assistants (interactive theorem provers) and model checking.
-      I have done a lot of research on these topics in the past (see below), but for now I have little time for it.
-      If you are a student interested in writing your thesis on these topics, please feel free to contact me and we might be able to work something out!
+      A big part of my work consists of contributing to standards at the <a href="https://openid.net">OpenID Foundation</a>, the <a href="https://www.ietf.org/">Internet Engineering Task Force</a> and the <a href="https://www.w3.org/">World Wide Web Consortium</a>.
+      A smaller part consists of advising on standards, business models and public policy and legislation.
+      I also do a lot of programming, mostly in F# and TypeScript.
     </p>
     <p>
-      I was a PhD student at DTU Compute from July 2021 to June 2024, working
-      on <em>User-Friendly Formal Methods</em>, especially for
-      distributed systems and using <a href="https://isabelle.in.tum.de/">Isabelle/HOL</a>.
-      My supervisor was <a href="https://people.compute.dtu.dk/jovi/">Jørgen Villadsen</a>,
-      and my co-supervisor was <a href="https://people.compute.dtu.dk/alcsc">Alceste Scalas</a>.
+      I am interested in, and have experience with:
+      <ul>
+        <li>Formal verification of software</li>
+        <li>Software engineering tools for functional programming languages</li>
+        <li>Type theory for distributed systems (and in general)</li>
+        <li>Proof assistants (interactive theorem provers)</li>
+        <li>Static program analysis tools</li>
+        <li>Security properties of internet standards</li>
+        <li>Approaches for teaching formal methods</li>
+        <li>Structural proof theory</li>
+      </ul>
+      If you are a student interested in writing your thesis on one of these topics, feel free to contact me and we might be able to work something out!
     </p>
-    
     <p>
-      Check out my <a href="https://github.com/fkj">GitHub</a> page to see what I might be up to.
-    </p>
-    
-    <p>
-      Please see my profiles on <a href="https://orcid.org/0000-0003-3651-8314">ORCID</a> or <a href="https://dblp.org/pid/307/9203">dblp</a>
-      for a (somewhat) up-to-date list of scientific publications.
+      Check out my <a href="https://github.com/fkj">GitHub</a> page or my <a href="https://www.linkedin.com/in/fkjac">LinkedIn</a> page to see what I might be up to.
     </p>
   </section>
 
-    <section aria-labelledby="talks">
+  <section aria-labelledby="talks">
     <h2 id="talks">Talks</h2>
     <ul aria-labelledby="talks">
       <li>
@@ -320,7 +438,10 @@
 
   <section aria-labelledby="articles">
     <h2 id="articles">Articles</h2>
-    <p style="font-size: 14pt; text-align: center">Note: open access versions of most of these articles are available through <a href="https://orbit.dtu.dk/en/persons/frederik-krogsdal-jacobsen/publications/">DTU Orbit</a>.</p>
+    <p>
+      Please see my profiles on <a href="https://orcid.org/0000-0003-3651-8314">ORCID</a> or <a href="https://dblp.org/pid/307/9203">dblp</a>
+      for a (somewhat) up-to-date list of scientific publications.
+    </p>
     <ul aria-labelledby="articles">
       <li>
 	<strong>Verifying a Sequent Calculus Prover for First-Order Logic with Functions in Isabelle/HOL</strong> in the <a href="https://www.springer.com/journal/10817">Journal of Automated Reasoning</a>.<br>
@@ -557,4 +678,10 @@ cancer? A Danish national cohort study</strong> in the
     <p>
   </section>
   </main>
+  <div id="to-the-top">
+    <a href="#">Back to the top</a>
+  </div>
+  <footer>
+    The font in the headers is Basteleur, which was designed by <a href="https://keussel.studio/">Keussel Studio</a> and distributed by <a href="velvetyne.fr">Velvetyne Type Foundry</a>. Have a great day!
+  </footer>
 </body></html>
